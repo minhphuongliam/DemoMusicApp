@@ -1,0 +1,63 @@
+# Android Studio
+*.iml
+.idea/
+.gradle/
+local.properties
+.DS_Store
+build/
+captures/
+.externalNativeBuild/
+.cxx/
+*.apk
+*.ap_
+
+# IntelliJ
+*.iws
+*.ipr
+
+# MacOS
+*.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Log files
+*.log
+
+# Keystore files (nếu bạn dùng signing)
+*.jks
+*.keystore
+
+# Crashlytics / Firebase
+fabric.properties
+crashlytics.properties
+firebase-*
+
+# Gradle Wrapper
+!gradle/wrapper/gradle-wrapper.jar
+
+# Node (nếu bạn dùng React Native)
+node_modules/
+
+# Kotlin
+*.kotlin_module
+
+# Jetpack Compose previews (generated preview images)
+.idea/assetWizardSettings.xml
+
+# Other Android Studio system files
+.idea/navEditor.xml
+.idea/assetWizardSettings.xml
+.idea/libraries/
+.idea/caches/
+.idea/modules.xml
+.idea/workspace.xml
+
+# Git
+*.orig
+*.rej
+
+# Optional: Exclude local debug signing config (nếu có)
+debug.keystore
