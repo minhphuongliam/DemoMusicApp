@@ -34,6 +34,7 @@ Desktop.ini
 fabric.properties
 crashlytics.properties
 firebase-*
+google-services.json
 
 # Gradle Wrapper
 !gradle/wrapper/gradle-wrapper.jar
@@ -49,7 +50,6 @@ node_modules/
 
 # Other Android Studio system files
 .idea/navEditor.xml
-.idea/assetWizardSettings.xml
 .idea/libraries/
 .idea/caches/
 .idea/modules.xml
