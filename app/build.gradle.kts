@@ -21,8 +21,10 @@ android {
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables{
+            useSupportLibrary = true
+        }
     }
 
     buildTypes {
@@ -90,6 +92,9 @@ dependencies {
 
     // Unit test
     testImplementation(libs.junit)
+
+    //Encrypted SharedPref
+    implementation(libs.androidx.security.crypto)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

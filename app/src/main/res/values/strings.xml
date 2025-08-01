@@ -1,3 +1,23 @@
 <resources>
     <string name="app_name">MusicApp</string>
+    <string name="next">Next</string>
+    <string name="password">Password</string>
+    <string name="fullname">Your fullname</string>
+    <string name="email">Email</string>
+    <string name="sign_up">Sign up</string>
+    <string name="signIn">Sign In</string>
+    <string name="millions_of_songs">Millions of songs\nFree on Spotify</string>
+    <string name="sign_up_free">Sign up free</string>
+    <string name="log_in">Log in</string>
+    <string name="your_age">Your age</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="error_email_invalid">Email is invalid</string>
+    <string name="error_password_too_short">Password is too short</string>
+    <string name="error_password_insecure">Password is insecure</string>
+    <string name="error_name_invalid_length">Name length is invalid</string>
+    <string name="error_age_invalid">Age must be valid and at least 13</string>
+    <string name="signup_sucess">Sign up success</string>
+    <string name="signup_error">Sign up failed. Error occurs</string>
+    <string name="remember_me">Remember me</string>
+    <string name="error">Error</string>
 </resources>
