@@ -1,6 +1,7 @@
 package com.demo.musicapp.ui.authentication
 
 import android.util.Log
+import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,20 +11,34 @@ import com.demo.musicapp.utils.CredentialsManager
 import com.demo.musicapp.utils.InputValidator
 import com.demo.musicapp.utils.Response
 import com.demo.musicapp.utils.SessionManager
+import com.google.firebase.FirebaseNetworkException
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import com.demo.musicapp.R
 import javax.inject.Inject
+
+// Lớp trạng thái UI để giao tiếp với Fragment một cách rõ ràng
+sealed class LoginUiState {
+    object Idle : LoginUiState() // Trạng thái ban đầu
+    object Loading : LoginUiState() // Đang xử lý
+    object Success : LoginUiState() // Đăng nhập thành công (cả online và offline)
+    data class Error(@StringRes val messageId: Int) : LoginUiState() // Có lỗi, trả về ID của string
+}
 
 @HiltViewModel
 class LoginFragmentViewModel @Inject constructor(
     private val authRepository: AuthRepository,
-    private val sessionManager: SessionManager,
     private val credentialsManager: CredentialsManager
+    // Bỏ SessionManager vì nó chỉ cần thiết ở SplashViewModel
 ) : ViewModel(){
 
     private val TAG = "LoginViewModel"
-    private var _logInResponse : MutableLiveData<Response<Boolean>> = MutableLiveData()
-    val logInResponse : LiveData<Response<Boolean>> = _logInResponse
+
+    // THAY ĐỔI 1: Sử dụng LoginUiState thay vì Response<Boolean>
+    private val _loginState = MutableLiveData<LoginUiState>(LoginUiState.Idle)
+    val loginState: LiveData<LoginUiState> = _loginState
 
     // LiveData để tự động điền thông tin khi khởi động
     private val _savedEmail = MutableLiveData<String?>()
@@ -40,7 +55,7 @@ class LoginFragmentViewModel @Inject constructor(
     val passwordError : LiveData<Int?> = _passwordError
 
     init {
-        // Ngay khi ViewModel được tạo, hãy thử tải thông tin đã lưu
+        // Ngay khi ViewModel được tạo thử tải thông tin đã lưu
         loadSavedCredentials()
     }
 
@@ -51,30 +66,76 @@ class LoginFragmentViewModel @Inject constructor(
     }
 
     // đăng nhập với chêck credient, check xem có remember ko
-    fun logIn(email : String, password: String, rememberMe: Boolean)
-    {
-        Log.d(TAG, "logIn: $email $password")
-        //check input
-        if(!validateInputs(email, password)){
+    fun logIn(email: String, password: String, rememberMe: Boolean) {
+        if (!validateInputs(email, password)) {
             return
         }
+
         viewModelScope.launch {
-            _logInResponse.value = Response.Loading
+            // Cập nhật trạng thái Loading
+            _loginState.value = LoginUiState.Loading
+
+            // Gọi repository để đăng nhập
             val result = authRepository.firebaseLogin(email, password)
 
-            if (result is Response.Success && result.data) {
+            // Xử lý kết quả trả về
+            when (result) {
+                is Response.Success -> {
+                    // Đăng nhập online thành công
+                    if (rememberMe) {
+                        credentialsManager.saveCredentials(email, password)
+                    } else {
+                        credentialsManager.clearCredentials()
+                    }
+                    _loginState.value = LoginUiState.Success
+                }
 
-                // check box nhớ mật khẩu
-                if (rememberMe) {
-                    //tick thì lưu
-                    credentialsManager.saveCredentials(email, password)
-                } else {
-                    // Nếu không, hãy xóa mọi thông tin cũ (nếu có)
-                    credentialsManager.clearCredentials()
+                is Response.Failure -> {
+                    // Nếu thất bại, xử lý các loại exception khác nhau
+                    handleLoginFailure(result.e, email, password, rememberMe)
+                }
+                is Response.Loading -> {
+                    // Đã xử lý  state loading
                 }
             }
-
-            _logInResponse.value = result
+        }
+    }
+    /**
+     * Hàm riêng để xử lý các kịch bản lỗi Firebase
+     */
+    private fun handleLoginFailure(e: Exception, emailAttempt: String, passwordAttempt: String, rememberMe: Boolean) {
+        when (e) {
+            is FirebaseNetworkException -> {
+                // Lỗi mạng, kiểm tra "Remember Me"
+                if (rememberMe) {
+                    val savedEmail = credentialsManager.getEmail()
+                    val savedPassword = credentialsManager.getPassword()
+                    if (emailAttempt == savedEmail && passwordAttempt == savedPassword) {
+                        // Cho phép đăng nhập offline nếu thông tin khớp
+                        Log.d(TAG, "Offline login successful with saved credentials.")
+                        _loginState.value = LoginUiState.Success
+                    } else {
+                        // Không khớp hoặc chưa từng lưu, báo lỗi mạng
+                        _loginState.value = LoginUiState.Error(R.string.error_no_internet_connection)
+                    }
+                } else {
+                    // Không tick "Remember Me", chỉ đơn giản là báo lỗi mạng
+                    _loginState.value = LoginUiState.Error(R.string.app_go_offline)
+                }
+            }
+            is FirebaseAuthInvalidUserException -> {
+                // Email không tồn tại
+                _loginState.value = LoginUiState.Error(R.string.error_email_is_not_registered)
+            }
+            is FirebaseAuthInvalidCredentialsException -> {
+                // Sai mật khẩu
+                _loginState.value = LoginUiState.Error(R.string.error_password_is_incorrect)
+            }
+            else -> {
+                // Các lỗi không xác định khác
+                Log.e(TAG, "Login failed with unknown exception: ", e)
+                _loginState.value = LoginUiState.Error(R.string.error_login_failed)
+            }
         }
     }
     fun validateInputs(email: String, password: String): Boolean {

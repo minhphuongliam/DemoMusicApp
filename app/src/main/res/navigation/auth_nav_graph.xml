@@ -13,13 +13,19 @@
     android:label="SplashFragment"
     tools:layout="@layout/fragment_splash">
     <!-- Action từ Splash -> Start. Xóa Splash khỏi back stack -->
+    <!-- Khi không có thông tin gì-->
     <action
         android:id="@+id/action_splashFragment_to_startFragment"
         app:destination="@id/startFragment"
         app:popUpTo="@id/splashFragment"
         app:popUpToInclusive="true" />
-<!--        popBackStack cho đến khi gặp frag-->
 
+    <!-- ACTION MỚI: Từ Splash đi thẳng đến Login và xóa Splash -->
+    <action
+        android:id="@+id/action_splashFragment_to_loginFragment"
+        app:destination="@id/loginFragment"
+        app:popUpTo="@id/splashFragment"
+        app:popUpToInclusive="true" />
     <!-- Việc đi đến HomeActivity sẽ được xử lý bằng Intent trong code, không cần action -->
 </fragment>
 
