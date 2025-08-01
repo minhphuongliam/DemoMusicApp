@@ -25,6 +25,12 @@ hilt = "2.51.1"
 googleServicesPlugin = "4.4.3"
 securityCrypto = "1.1.0-alpha06"
 
+# Add new testing stuffs
+mockito = "4.8.0"
+mockitoKotlin = "4.0.0"
+coreTesting = "2.1.0"
+coroutinesTest = "1.6.4"
+
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -75,6 +81,12 @@ hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.r
 
 #Encrypted SharedPref Crypto
 androidx-security-crypto = { group = "androidx.security", name = "security-crypto", version.ref = "securityCrypto" }
+
+#Testing Stuffs
+mockito-core = { group = "org.mockito", name = "mockito-core", version.ref = "mockito" }
+mockito-kotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockitoKotlin" }
+androidx-core-testing = { group = "androidx.arch.core", name = "core-testing", version.ref = "coreTesting" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutinesTest" }
 
 
 [plugins]

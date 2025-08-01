@@ -3,10 +3,12 @@ package com.demo.musicapp.navigation
 import android.content.Intent
 import androidx.navigation.NavController
 import com.demo.musicapp.R
+import com.demo.musicapp.ui.authentication.AuthActivity
+import com.demo.musicapp.ui.home.HomeActivity
 import java.lang.ref.WeakReference
-import java.lang.reflect.Constructor
 import javax.inject.Inject
 import javax.inject.Singleton
+
 
 @Singleton // Đảm bảo chỉ có MỘT instance duy nhất cho toàn ứng dụng
 class AppNavigatorImpl @Inject constructor() : AppNavigator {
@@ -37,6 +39,10 @@ class AppNavigatorImpl @Inject constructor() : AppNavigator {
         navController?.get()?.navigate(R.id.action_splashFragment_to_startFragment)
     }
 
+    override fun openSplashToLogin() {
+        navController?.get()?.navigate(R.id.action_splashFragment_to_loginFragment)
+    }
+
     override fun openStartToLogin() {
         navController?.get()?.navigate(R.id.action_startFragment_to_loginFragment)
     }
@@ -51,9 +57,29 @@ class AppNavigatorImpl @Inject constructor() : AppNavigator {
 
     override fun navigateToHome() {
         navController?.get()?.context?.let { context ->
-            val intent = Intent("com.demo.musicapp.ACTION_OPEN_HOME")
+            // THAY ĐỔI: Dùng Intent tường minh tới HomeActivity.class.java cho đơn giản và an toàn hơn
+            val intent = Intent(context, HomeActivity::class.java)
             // - FLAG_ACTIVITY_NEW_TASK: Cần thiết khi gọi startActivity từ một context không phải là Activity.
             // - FLAG_ACTIVITY_CLEAR_TASK: Xóa tất cả các Activity trong task hiện tại (AuthActivity sẽ bị xóa).
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            context.startActivity(intent)
+        }
+    }
+    override fun navigateToStartAndClearBackStack() {
+        // Hàm này sẽ hữu ích khi logout từ Home
+        // Nó sẽ đi đến Start và xóa tất cả những gì phía trên nó
+        navController?.get()?.navigate(
+            R.id.startFragment,
+            null,
+            androidx.navigation.NavOptions.Builder()
+                // THAY ĐỔI: Dùng graph.startDestinationId thay vì graph.id để an toàn hơn
+                .setPopUpTo(navController?.get()?.graph?.startDestinationId ?: 0, true)
+                .build()
+        )
+    }
+    override fun navigateToAuthAndClearStack() {
+        navController?.get()?.context?.let { context ->
+            val intent = Intent(context, AuthActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             context.startActivity(intent)
         }

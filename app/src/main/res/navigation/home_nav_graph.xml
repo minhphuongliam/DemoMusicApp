@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_nav_graph"
+    app:startDestination="@id/homeSampleFragment">
+
+    <!-- Màn hình Home mẫu -->
+    <fragment
+        android:id="@+id/homeSampleFragment"
+        android:name="com.demo.musicapp.ui.home.HomeSampleFragment"
+        android:label="HomeSampleFragment"
+        tools:layout="@layout/fragment_home_sample" />
+
+    <!-- Sau này sẽ thêm các fragment Search, Library, Profile vào đây -->
+</navigation>

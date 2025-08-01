@@ -19,6 +19,9 @@ interface AppNavigator {
     /** Chuyển từ màn hình Splash sang Start sau khi kiểm tra xong. */
     fun openSplashToStart()
 
+    /** Chuyển từ màn hình Splash sang Login sau khi login Firebase lỗi. */
+    fun openSplashToLogin()
+
     /** Chuyển từ màn hình Start sang Login. */
     fun openStartToLogin()
 
@@ -33,8 +36,14 @@ interface AppNavigator {
     /** Chuyển từ luồng xác thực sang màn hình chính (HomeActivity). */
     fun navigateToHome()
 
+    /** Chuyển từ luồng chính sang xác luồng thực (AuthActivity) */
+    fun navigateToAuthAndClearStack()
+
     // --- Hành động chung ---
 
     /** Quay lại màn hình trước đó trong back stack. */
     fun navigateUp()
+
+    /** Đi đến màn hình Start và xóa tất cả các màn hình trên nó. Dùng khi cần reset luồng. */
+    fun navigateToStartAndClearBackStack()
 }
