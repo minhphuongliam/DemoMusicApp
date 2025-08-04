@@ -2,6 +2,7 @@ package com.demo.musicapp.data.repository.authentication
 
 import android.util.Log
 import com.demo.musicapp.utils.Response
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
@@ -32,7 +33,7 @@ class AuthRepositoryImpl @Inject constructor(
                 "email" to email,
                 "display_name" to name,
                 "age" to age,
-                "createdAt" to System.currentTimeMillis()
+                "createdAt" to Timestamp.now() // Fix timedate
             )
             database.collection("users")
                 .document(uid)

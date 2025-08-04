@@ -10,7 +10,6 @@ import com.demo.musicapp.data.repository.authentication.AuthRepository
 import com.demo.musicapp.utils.CredentialsManager
 import com.demo.musicapp.utils.InputValidator
 import com.demo.musicapp.utils.Response
-import com.demo.musicapp.utils.SessionManager
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
