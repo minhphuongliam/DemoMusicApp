@@ -17,7 +17,7 @@ class StartFragment : Fragment() {
     lateinit var appNavigator: AppNavigator
 
     private var _binding: FragmentStartBinding?= null
-    private val binding = _binding!!
+    private val binding get() = _binding!! //error fix
 
     override fun onCreateView(
         inflater: LayoutInflater,

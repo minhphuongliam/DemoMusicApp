@@ -9,7 +9,7 @@ appcompat = "1.7.1"
 material = "1.12.0"
 
 # New added versions
-nav = "2.9.2"
+nav = "2.7.7"
 lifecycle = "2.9.2"
 activityKtx = "1.10.1"
 fragmentKtx = "1.8.8"

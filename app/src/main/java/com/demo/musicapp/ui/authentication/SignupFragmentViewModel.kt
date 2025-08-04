@@ -37,7 +37,7 @@ class SignupFragmentViewModel @Inject constructor(
     fun signUp(email : String, password: String, name: String, age: String ){
         Log.d(TAG, "signUp: $email $password $name $age")
         // Check input => OK
-        if (!validateInputs(email, password, name, age)){
+        if (!validateInputs(name, email, password, age)){ //fix bug
             return
         }
             // convert -> int sau validate age
