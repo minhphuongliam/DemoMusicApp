@@ -1,6 +1,7 @@
 package com.demo.musicapp.navigation
 
 import android.content.Intent
+import android.util.Log
 import androidx.navigation.NavController
 import com.demo.musicapp.R
 import com.demo.musicapp.ui.authentication.AuthActivity
@@ -36,7 +37,14 @@ class AppNavigatorImpl @Inject constructor() : AppNavigator {
     // get()?: lấy bên trong là 1 NavController , có thể bị GC dọn do là 1 WeakReference
 
     override fun openSplashToStart() {
-        navController?.get()?.navigate(R.id.action_splashFragment_to_startFragment)
+        val nc = navController?.get()
+        Log.d("AppNavigator", "openSplashToStart() called. navController=$nc")
+
+        if (nc != null) {
+            nc.navigate(R.id.action_splashFragment_to_startFragment)
+        } else {
+            Log.e("AppNavigator", "NavController is null! Did you forget to bind()?")
+        }
     }
 
     override fun openSplashToLogin() {
@@ -52,7 +60,7 @@ class AppNavigatorImpl @Inject constructor() : AppNavigator {
     }
 
     override fun openSignupToLogin() {
-        navController?.get()?.navigate(R.id.action_signupFragment_to_loginFragment)
+        navController?.get()?.navigate(R.id.loginFragment)
     }
 
     override fun navigateToHome() {

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.demo.musicapp.utils.CredentialsManager
 import com.demo.musicapp.utils.SessionManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -16,7 +17,8 @@ sealed class HomeNavigationEvent {
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val sessionManager: SessionManager
+    private val sessionManager: SessionManager,
+    private val credentialsManager: CredentialsManager
 ) : ViewModel() {
 
     private val _navigationEvent = MutableLiveData<HomeNavigationEvent>()
@@ -25,9 +27,9 @@ class HomeViewModel @Inject constructor(
     fun onLogoutClicked() {
         viewModelScope.launch {
             // Gọi hàm logout trong SessionManager
-            // Hàm này sẽ xóa cả Firebase session và SharedPreferences
+            // xóa cả Firebase session và SharedPreferences
             sessionManager.logout()
-
+            credentialsManager.clearCredentials()
             // Phát sự kiện để báo cho View biết cần chuyển về luồng Auth
             _navigationEvent.value = HomeNavigationEvent.NavigateToAuth
         }

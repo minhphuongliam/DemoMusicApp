@@ -78,6 +78,9 @@ class SignupFragment  : Fragment(){
                 is Response.Success -> {
                     Toast.makeText(context, getString(R.string.signup_sucess), Toast.LENGTH_SHORT).show()
 
+                    // Xóa Signup khỏi back stack → rồi chuyển sang Login
+                    findNavController().popBackStack() // Xóa SignupFragment
+                    navigator.openSignupToLogin()      // Chuyển sang LoginFragment
                 }
                 is Response.Failure -> {
                     val errorMessage = response.e.message ?: getString(R.string.signup_error)

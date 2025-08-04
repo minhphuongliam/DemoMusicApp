@@ -8,10 +8,8 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.demo.musicapp.R
 import com.demo.musicapp.databinding.FragmentLoginBinding
 import com.demo.musicapp.navigation.AppNavigator
-import com.demo.musicapp.utils.Response
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -56,6 +54,10 @@ class LoginFragment: Fragment() {
 
             // Gửi tất cả thông tin cho ViewModel xử lý
             viewModel.logIn(email, password, rememberMe)
+        }
+
+        binding.buttonBack.setOnClickListener {
+            appNavigator.navigateUp()
         }
 
     }
