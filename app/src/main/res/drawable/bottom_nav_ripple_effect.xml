@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="#40FFFFFF"> <!-- Màu gợn sóng, ở đây là màu trắng với 25% độ mờ -->
+
+    <!-- Phần tử này có thể là một hình dạng hoặc màu nền tĩnh,
+         nhưng trong trường hợp này, chúng ta không cần nền cho ripple -->
+    <item android:id="@android:id/mask">
+        <shape android:shape="rectangle">
+            <solid android:color="@android:color/white" />
+        </shape>
+    </item>
+</ripple>

@@ -3,14 +3,34 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/home_nav_graph"
-    app:startDestination="@id/homeSampleFragment">
+    app:startDestination="@+id/homeFragment">
+<!--    app:startDestination="@+id/tab_home_navigation">-->
 
-    <!-- Màn hình Home mẫu -->
+<!--    <include app:graph="@navigation/tab_search_navigation" />-->
+<!--    <include app:graph="@navigation/tab_library_navigation" />-->
+<!--    <include app:graph="@navigation/tab_home_navigation" />-->
+<!--    <include app:graph="@navigation/tab_profile_navigation" />-->
+
+    <!-- ID của fragment phải trùng với ID của item trong menu -->
     <fragment
-        android:id="@+id/homeSampleFragment"
-        android:name="com.demo.musicapp.ui.home.HomeSampleFragment"
-        android:label="HomeSampleFragment"
+        android:id="@+id/homeFragment"
+        android:name="com.demo.musicapp.ui.home.home_screen.HomeSampleFragment"
+        android:label="Home"
         tools:layout="@layout/fragment_home_sample" />
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.demo.musicapp.ui.home.search.SearchFragment"
+        android:label="Search"
+        tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/libraryFragment"
+        android:name="com.demo.musicapp.ui.home.library.LibraryFragment"
+        android:label="Library"
+        tools:layout="@layout/fragment_library" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.demo.musicapp.ui.home.profile.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile" />
 
-    <!-- Sau này sẽ thêm các fragment Search, Library, Profile vào đây -->
 </navigation>

@@ -1,4 +1,4 @@
-package com.demo.musicapp.ui.home
+package com.demo.musicapp.ui.home.home_screen
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

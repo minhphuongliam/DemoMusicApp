@@ -76,7 +76,7 @@ class SignupFragment  : Fragment(){
 
             when (response) {
                 is Response.Success -> {
-                    Toast.makeText(context, getString(R.string.signup_sucess), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, getString(R.string.signup_success), Toast.LENGTH_SHORT).show()
 
                     // Xóa Signup khỏi back stack → rồi chuyển sang Login
                     findNavController().popBackStack() // Xóa SignupFragment

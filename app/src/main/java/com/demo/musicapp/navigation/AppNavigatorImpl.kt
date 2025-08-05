@@ -64,11 +64,18 @@ class AppNavigatorImpl @Inject constructor() : AppNavigator {
     }
 
     override fun navigateToHome() {
-        navController?.get()?.context?.let { context ->
-            // THAY ĐỔI: Dùng Intent tường minh tới HomeActivity.class.java cho đơn giản và an toàn hơn
+        // Lấy ra NavController hiện tại để dùng
+        val currentNavController = navController?.get()
+        if (currentNavController == null) return
+
+        // TỰ DỌN DẸP TRƯỚC KHI CHUYỂN
+        // Vì hành động tiếp theo sẽ hủy Activity hiện tại,
+        // chúng ta unbind ngay bây giờ.
+        unbind()
+
+        // Bây giờ thực hiện việc chuyển Activity
+        currentNavController.context.let { context ->
             val intent = Intent(context, HomeActivity::class.java)
-            // - FLAG_ACTIVITY_NEW_TASK: Cần thiết khi gọi startActivity từ một context không phải là Activity.
-            // - FLAG_ACTIVITY_CLEAR_TASK: Xóa tất cả các Activity trong task hiện tại (AuthActivity sẽ bị xóa).
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             context.startActivity(intent)
         }
@@ -86,7 +93,15 @@ class AppNavigatorImpl @Inject constructor() : AppNavigator {
         )
     }
     override fun navigateToAuthAndClearStack() {
-        navController?.get()?.context?.let { context ->
+        // Tương tự, lấy NavController ra trước
+        val currentNavController = navController?.get()
+        if (currentNavController == null) return
+
+        // Tự unbind trước khi hủy Activity
+        unbind()
+
+        // Thực hiện việc chuyển Activity
+        currentNavController.context.let { context ->
             val intent = Intent(context, AuthActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             context.startActivity(intent)

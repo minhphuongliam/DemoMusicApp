@@ -1,4 +1,4 @@
-package com.demo.musicapp.ui.home
+package com.demo.musicapp.ui.home.home_screen
 
 import android.content.Intent
 import android.os.Bundle

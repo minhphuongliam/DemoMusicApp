@@ -16,14 +16,20 @@
     <string name="error_password_insecure">Password is insecure</string>
     <string name="error_name_invalid_length">Name length is invalid</string>
     <string name="error_age_invalid">Age must be valid and at least 13</string>
-    <string name="signup_sucess">Sign up success</string>
+    <string name="signup_success">Sign up success</string>
     <string name="signup_error">Sign up failed. Error occurs</string>
     <string name="remember_me">Remember me</string>
     <string name="error">Error</string>
-    <!-- Lỗi firebase login -->
+
     <string name="error_no_internet_connection">No Internet Connection</string>
     <string name="app_go_offline">App Go Offline</string>
     <string name="error_email_is_not_registered">Email Is Not Registered</string>
     <string name="error_password_is_incorrect">Password Is Incorrect</string>
     <string name="error_login_failed">Login Failed</string>
+
+    <string name="tab_home">Home</string>
+    <string name="tab_search">Search</string>
+    <string name="tab_library">Library</string>
+    <string name="tab_profile">Profile</string>
+    <string name="log_out">Log out</string>
 </resources>

@@ -28,10 +28,4 @@ class AuthActivity: AppCompatActivity() {
         appNavigator.bind(navController)
     }
 
-    // Hết vòng thì xóa navigator cho Auth (tránh tham chiếu var)
-    override fun onDestroy() {
-        super.onDestroy()
-
-        appNavigator.unbind()
-    }
 }
