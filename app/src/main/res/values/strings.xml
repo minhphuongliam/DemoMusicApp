@@ -32,4 +32,11 @@
     <string name="tab_library">Library</string>
     <string name="tab_profile">Profile</string>
     <string name="log_out">Log out</string>
+    <string name="tab_track">Track</string>
+    <string name="tab_artist">Artist</string>
+    <string name="tab_album">Album</string>
+
+    <string name="song_title">Song Title</string>
+    <string name="artist">Artist</string>
+    <string name="default_cover">Default Cover</string>
 </resources>
