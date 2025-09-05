@@ -23,4 +23,18 @@ data class TrackDto(
 
     @SerializedName("duration")
     val duration: Int,
+
+    // --- BỔ SUNG PHẦN BỊ THIẾU ---
+    /**
+     * Thông tin nghệ sĩ của bài hát, được lồng trực tiếp trong response.
+     */
+    @SerializedName("artist")
+    val artist: ArtistDto,
+
+    /**
+     * Thông tin album của bài hát.
+     * Trường này là nullable (AlbumDto?) vì một bài hát có thể là "Single".
+     */
+    @SerializedName("album")
+    val album: AlbumDto?
 )
